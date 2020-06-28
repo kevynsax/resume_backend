@@ -5,11 +5,16 @@ COPY . .
 RUN npm install --silent
 RUN npm run build
 
-FROM node:alpine
-COPY --from=build /app/build /app
-COPY --from=build /app/package.json /app/
 
-RUN npm install --only=prod
+
+FROM node:alpine
+WORKDIR /app
+
+COPY --from=build /app/build .
+COPY package.json .
+
+ENV NODE_ENV=production
+RUN npm install
 
 EXPOSE 3000
 
