@@ -16,9 +16,6 @@ describe('Reaction Repo tests', () => {
             console.error(err);
             process.exit(1);
         });
-        
-        await connection.db.dropDatabase();
-        await disconnect();
     });
 
     test('Test mapping', async () => {
