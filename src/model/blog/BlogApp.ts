@@ -12,5 +12,4 @@ export class BlogApp implements IBlogApp{
     createReaction = async (reaction: Reaction) => {
         await this.repo.create(reaction);
     };
-    
 }
