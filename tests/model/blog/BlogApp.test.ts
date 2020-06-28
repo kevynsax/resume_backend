@@ -1,6 +1,6 @@
 import {Reaction, ReactionTypeEnum} from "src/model/blog/types";
 import {BlogApp} from "src/model/blog/BlogApp";
-import {IReactionRepo, ReactionModel} from "src/model/blog/BlogRepo";
+import {IReactionRepo, ReactionModel} from "src/model/blog/ReactionRepo";
 
 
 describe('Insert Reaction', () => {
