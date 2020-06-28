@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "jest --passWithNoTests --watch --no-cache",
+    "test": "jest --passWithNoTests --watchAll --no-cache",
     "start": "nodemon --config nodemon.json",
     "build": "tsc"
   },
