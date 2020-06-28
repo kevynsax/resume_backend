@@ -7,8 +7,9 @@ RUN npm run build
 
 FROM node:alpine
 COPY --from=build /app/build /app
-COPY --from=build /app/node_modules /app/
 COPY --from=build /app/package.json /app/
+
+RUN npm install --only=prod
 
 EXPOSE 3000
 
