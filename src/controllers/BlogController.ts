@@ -6,7 +6,6 @@ import {Controller, Post} from "@overnightjs/core";
 
 export const blogRoute = "api/blog";
 
-
 @Controller(blogRoute)
 export class BlogController {
     
@@ -19,5 +18,6 @@ export class BlogController {
         await this.app.createReaction({type, idArticle} as Reaction)
             .then(() => res.sendStatus(httpStatusCode.created))
             .catch(err => res.status(httpStatusCode.internalServerError).send(err.message));
+        
     }
 }

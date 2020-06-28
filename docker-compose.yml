@@ -1,0 +1,27 @@
+version: "2.1"
+
+services:
+  resume-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: resume-backend
+    image: resume-backend
+    depends_on:
+      - mongo
+    environment:
+      - PORT=3000
+      - DB_CONNECTION_STRING="mongodb://resume-db:27017/resume-data
+    ports:
+      - "3400:3000"
+      
+  mongo:
+    container_name: resume-db
+    image: mongo
+    volumes:
+      - resume:/data/db
+    ports:
+      - "27017:27017"
+
+volumes:
+  resume:
