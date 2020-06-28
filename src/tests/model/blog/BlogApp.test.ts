@@ -8,7 +8,8 @@ describe('Insert Reaction', () => {
         // given
         const fakeReaction: Reaction = {
             type: ReactionTypeEnum.dislike,
-            idArticle: 4
+            idArticle: 4,
+            idUser: "48597"
         };
         
         const create = jest.fn()

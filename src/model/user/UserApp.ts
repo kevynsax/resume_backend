@@ -22,7 +22,7 @@ export class UserApp implements IUserApp {
             .catch(err => console.log(`Error getting geolocation for ip address: ${ipAddress}`));
 
         const user = ({ipAddress, geolocation}) as User;
-        
+
         return this.repo.create(user)
                 .then(x => x._id);
     };

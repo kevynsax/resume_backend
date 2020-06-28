@@ -22,7 +22,8 @@ describe('Reaction Repo tests', () => {
         // given
         const fakeReaction: Reaction = {
             type: ReactionTypeEnum.like,
-            idArticle: 9
+            idArticle: 9,
+            idUser: "fake id user"
         };
         
         const validReaction = new ReactionRepo(fakeReaction);
@@ -33,5 +34,6 @@ describe('Reaction Repo tests', () => {
         expect(savedReaction._id).toBeDefined();
         expect(savedReaction.type).toBe(fakeReaction.type);
         expect(savedReaction.idArticle).toBe(fakeReaction.idArticle);
+        expect(savedReaction.idUser).toBe(fakeReaction.idUser);
     })
 });

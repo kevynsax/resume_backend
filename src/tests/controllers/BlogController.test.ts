@@ -7,10 +7,11 @@ import request from 'supertest';
 import {ResumeServer} from "src/ResumeServer";
 
 
-const fakeReaction = {
+const fakeReaction: Reaction = {
     type: ReactionTypeEnum.like,
     idArticle: 3,
-} as Reaction;
+    idUser: "fake id user"  
+};
 
 
 describe('Insert reaction article', () => {

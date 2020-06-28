@@ -8,7 +8,8 @@ export type IReactionRepo = Model<ReactionModel>;
 
 const schema = new Schema<ReactionModel>({
     type: {type: ReactionTypeEnum, required: true},
-    idArticle: {type: Number, required: true}
+    idArticle: {type: Number, required: true},
+    idUser: {type: String, required: true}
 });
 
 export const ReactionRepo = 

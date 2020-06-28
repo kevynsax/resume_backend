@@ -13,9 +13,9 @@ export class BlogController {
     
     @Post("reaction")
     public async insertReaction(req: Request, res: Response): Promise<void>{
-        const {type, idArticle} = req.body;
+        const {type, idArticle, idUser} = req.body;
         
-        await this.app.createReaction({type, idArticle} as Reaction)
+        await this.app.createReaction({type, idArticle, idUser} as Reaction)
             .then(() => res.sendStatus(httpStatusCode.created))
             .catch(err => res.status(httpStatusCode.internalServerError).send(err.message));
         
