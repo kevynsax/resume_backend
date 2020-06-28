@@ -1,3 +1,4 @@
+import 'module-alias/register';
 import {ResumeServer} from "src/ResumeServer";
 import {BlogController} from "src/controllers/BlogController";
 import {BlogApp} from "src/model/blog/BlogApp";

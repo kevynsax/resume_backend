@@ -1,5 +1,5 @@
 import {MongoMemoryServer} from 'mongodb-memory-server-global';
-import {connect, disconnect, mongo} from "mongoose";
+import {connect, disconnect, mongo, connection} from "mongoose";
 import {Reaction, ReactionTypeEnum} from "src/model/blog/types";
 import {ReactionRepo} from 'src/model/blog/ReactionRepo';
 
@@ -15,7 +15,10 @@ describe('Reaction Repo tests', () => {
             
             console.error(err);
             process.exit(1);
-        })
+        });
+        
+        await connection.db.dropDatabase();
+        await disconnect();
     });
 
     test('Test mapping', async () => {
