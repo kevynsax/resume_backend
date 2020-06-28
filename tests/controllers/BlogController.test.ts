@@ -41,10 +41,10 @@ describe('Insert reaction article', () => {
 
         const send = jest.fn();
         const res = {send} as unknown as Response;
-        
+
         const status = jest.fn().mockImplementationOnce(() => res);
         res.status = status;
-        
+
         // when
         const result = await target.insertReaction({body:{}} as Request, res);
         
