@@ -3,6 +3,7 @@ import {httpStatusCode} from "src/constants";
 import {IUserApp} from "src/model/user/UserApp";
 import {UserController} from "src/controllers/UserController";
 import {CreateUserViewModel, UserViewModel} from "src/viewModel/userViewModels";
+import {ResumeResponse} from "src/middleware/injectHelpers";
 
 describe('Insert User', () => {
     test('Happy path', async () => {
@@ -23,7 +24,7 @@ describe('Insert User', () => {
         const send = jest.fn();
         
         const req = {body: fakeRequestUser} as Request;
-        const res = {send} as unknown as Response;
+        const res = {send} as unknown as ResumeResponse;
         
         const status = jest.fn()
             .mockImplementationOnce(() => res);
@@ -48,7 +49,7 @@ describe('Insert User', () => {
         const target = new UserController({createUser} as IUserApp);
         
         const send = jest.fn();
-        const res = {send} as unknown as Response;
+        const res = {send} as unknown as ResumeResponse;
         
         const status = jest.fn().mockImplementationOnce(() => res);
         res.status = status;
