@@ -5,62 +5,45 @@ import {UserController} from "src/controllers/UserController";
 import {CreateUserViewModel, UserViewModel} from "src/viewModel/userViewModels";
 import {ResumeResponse} from "src/middleware/injectHelpers";
 
-describe('Insert User', () => {
-    test('Happy path', async () => {
-        const fakeRequestUser: CreateUserViewModel = {
-            ipAddress: "192.404.303.022", 
-        };
-        
-        const fakeReturnUser: UserViewModel = {
-            id: "abacate",
-        };
-        
-        // given
-        const createUser = jest.fn()
-            .mockImplementationOnce(x => new Promise<string>(resolve => resolve(fakeReturnUser.id)));
+const fakeRequestUser: CreateUserViewModel = {
+    ipAddress: "192.404.303.022",
+};
 
-        const target = new UserController({createUser} as IUserApp);
+const fakeReturnUser: UserViewModel = {
+    id: "abacate",
+};
+
+describe('Insert User', () => {
+    let target: UserController;
+    let fakeApp: IUserApp;
+    let fakeResponse: ResumeResponse;
+
+    beforeEach(() => {
+        const fakeUnwrap = jest.fn()
+            .mockImplementationOnce(x => x);
         
-        const send = jest.fn();
-        
-        const req = {body: fakeRequestUser} as Request;
-        const res = {send} as unknown as ResumeResponse;
-        
-        const status = jest.fn()
-            .mockImplementationOnce(() => res);
-        
-        res.status = status;
-        
-        // when
-        await target.insertUser(req, res);
-        
-        // then
-        expect(status).toBeCalledWith(httpStatusCode.success);
-        expect(send).toBeCalledWith(fakeReturnUser);
-        expect(createUser).toBeCalledWith(fakeRequestUser.ipAddress);
-    });
-    
-    
-    test('Error on App', async () => {
-        // given
-        const errorMessage = "Error on app user";
+        fakeResponse = {
+            unwrap: fakeUnwrap
+        } as unknown as ResumeResponse;
+
+
         const createUser = jest.fn()
-            .mockImplementationOnce(() => new Promise<string>((_, reject) => reject(new Error(errorMessage))));
-        const target = new UserController({createUser} as IUserApp);
-        
-        const send = jest.fn();
-        const res = {send} as unknown as ResumeResponse;
-        
-        const status = jest.fn().mockImplementationOnce(() => res);
-        res.status = status;
-        
+            .mockImplementationOnce(x => 
+                new Promise<string>(resolve => resolve(fakeReturnUser.id)));
+        fakeApp = {createUser} as IUserApp;
+        target = new UserController(fakeApp);
+    });
+
+    test('Happy path', async () => {
+        // given
+        const req = {body: fakeRequestUser} as Request;
+
+
         // when
-        await target.insertUser({body: {}} as Request, res);
-        
+        const result = await target.insertUser(req, fakeResponse);
+
         // then
-        expect(send).toBeCalledWith(errorMessage);
-        expect(status).toBeCalledWith(httpStatusCode.internalServerError);
-        
-    })
-     
+        expect(result).toEqual(fakeReturnUser);
+        expect(fakeApp.createUser).toBeCalledWith(fakeRequestUser.ipAddress);
+    });
 });
