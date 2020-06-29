@@ -1,9 +1,11 @@
-import {Request, Response} from "express";
-import {httpStatusCode} from "src/constants";
+import {Request} from "express";
 import {IUserApp} from "src/model/user/UserApp";
 import {UserController} from "src/controllers/UserController";
 import {CreateUserViewModel, UserViewModel} from "src/viewModel/userViewModels";
 import {ResumeResponse} from "src/middleware/injectHelpers";
+import request from "supertest";
+import {ResumeServer} from "src/ResumeServer";
+import {httpStatusCode} from "src/constants";
 
 const fakeRequestUser: CreateUserViewModel = {
     ipAddress: "192.404.303.022",
@@ -13,7 +15,7 @@ const fakeReturnUser: UserViewModel = {
     id: "abacate",
 };
 
-describe('Insert User', () => {
+describe('User Controller', () => {
     let target: UserController;
     let fakeApp: IUserApp;
     let fakeResponse: ResumeResponse;
@@ -34,10 +36,9 @@ describe('Insert User', () => {
         target = new UserController(fakeApp);
     });
 
-    test('Happy path', async () => {
+    test('Insert User', async () => {
         // given
         const req = {body: fakeRequestUser} as Request;
-
 
         // when
         const result = await target.insertUser(req, fakeResponse);
@@ -45,5 +46,18 @@ describe('Insert User', () => {
         // then
         expect(result).toEqual(fakeReturnUser);
         expect(fakeApp.createUser).toBeCalledWith(fakeRequestUser.ipAddress);
+    });
+    
+    test('Insert User - Test Endpoint', async () => {
+        const server = new ResumeServer([target]); 
+        const agent = request.agent(server.appExpress);
+        
+        const response = await agent
+            .post(`/api/user`)
+            .send(fakeRequestUser)
+            .expect(httpStatusCode.success)
+            .then(x => x.text);
+        
+        expect(response).toBe(JSON.stringify(fakeReturnUser));
     });
 });
