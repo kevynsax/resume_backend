@@ -22,7 +22,7 @@ describe('Reaction Repo tests', () => {
         // given
         const fakeReaction: Reaction = {
             type: ReactionTypeEnum.like,
-            idArticle: 9,
+            idArticle: "Fake id article",
             idUser: "fake id user"
         };
         

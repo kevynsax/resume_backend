@@ -8,7 +8,7 @@ describe('Insert Reaction', () => {
         // given
         const fakeReaction: Reaction = {
             type: ReactionTypeEnum.dislike,
-            idArticle: 4,
+            idArticle: "Fake id article",
             idUser: "48597"
         };
         

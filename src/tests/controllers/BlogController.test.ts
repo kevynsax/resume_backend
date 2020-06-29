@@ -7,16 +7,24 @@ import request from 'supertest';
 import {ResumeServer} from "src/ResumeServer";
 import {ResumeResponse} from "src/middleware/injectHelpers";
 import Mock = jest.Mock;
-
+import {successPromise} from "src/tests/utilsTest";
+import {DeleteReactionViewModel} from "src/viewModel/blogViewModels";
 
 const fakeIdUser = "fake id user";
+const fakeIdArticle = "fake id article";
 const fakeReaction: Reaction = {
     type: ReactionTypeEnum.like,
-    idArticle: 3,
+    idArticle: fakeIdArticle,
     idUser: fakeIdUser
 };
 const listReactions = [fakeReaction];
 
+const fakeDeleteReaction: DeleteReactionViewModel = {
+    idArticle: fakeIdArticle,
+    idUser: fakeIdUser
+};
+
+const reactionRoute = `/${blogRoute}/reaction`;
 
 describe('Blog Controller', () => {
     let app: IBlogApp;
@@ -33,13 +41,16 @@ describe('Blog Controller', () => {
         } as unknown as ResumeResponse;
         
         const createReaction = jest.fn()
-            .mockImplementationOnce(() => new Promise<void>(resolve => resolve()));
+            .mockImplementationOnce(successPromise);
 
         const listReactionsByUser = jest.fn()
             .mockImplementationOnce(() =>
                 new Promise<Reaction[]>(resolve => resolve(listReactions)));
         
-        app = {createReaction, listReactionsByUser} as unknown as IBlogApp;
+        const deleteReaction = jest.fn()
+            .mockImplementationOnce(successPromise);
+        
+        app = {createReaction, listReactionsByUser, deleteReaction} as unknown as IBlogApp;
         target = new BlogController(app);
     });
 
@@ -61,7 +72,7 @@ describe('Blog Controller', () => {
         const agent = request.agent(server.appExpress);
 
         await agent
-            .post(`/${blogRoute}/reaction`)
+            .post(reactionRoute)
             .send(fakeReaction)
             .expect(httpStatusCode.created);
     });
@@ -88,12 +99,29 @@ describe('Blog Controller', () => {
         const agent = request.agent(server.appExpress);
         
         const response = await agent
-            .get(`/${blogRoute}/reaction/${fakeIdUser}`)
+            .get(`${reactionRoute}/${fakeIdUser}`)
             .expect(httpStatusCode.success)
             .then(x => x.text);
         
         expect(response).toBe(JSON.stringify(listReactions));
-        expect(app.listReactionsByUser).toBeCalledWith(fakeIdUser);
     });
 
+    test('Delete Reaction', async () => {
+        const req = {body: fakeDeleteReaction} as Request;
+        
+        const action = () => target.removeReaction(req, fakeResponse);
+        
+        await expect(action()).resolves;
+        expect(app.deleteReaction).toBeCalledWith(fakeDeleteReaction.idUser, fakeDeleteReaction.idArticle);
+    });
+    
+    test('Delete Reaction - test endpoint', async () => {
+        const server = new ResumeServer([target]);
+        const agent = request.agent(server.appExpress);
+        
+        await agent
+                .delete(reactionRoute)
+                .send(fakeDeleteReaction)
+                .expect(httpStatusCode.success);
+    });
 });

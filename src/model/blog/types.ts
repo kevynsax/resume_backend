@@ -5,6 +5,6 @@ export enum ReactionTypeEnum{
 
 export interface Reaction {
     type: ReactionTypeEnum,
-    idArticle: number
+    idArticle: string
     idUser: string
 }
