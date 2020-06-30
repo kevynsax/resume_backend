@@ -1,7 +1,7 @@
-import {IUserApp} from "src/model/user/UserApp";
-import {CreateUserViewModel, UserViewModel} from "src/viewModel/userViewModels";
 import {Endpoint, injectHelpers} from "src/middleware/injectHelpers";
 import {ClassMiddleware, Controller, Post} from "@overnightjs/core";
+import {IUserApp} from "src/user/UserApp";
+import {CreateUserViewModel, UserViewModel} from "src/user/userViewModels";
 
 @Controller("api/user")
 @ClassMiddleware(injectHelpers)

@@ -3,15 +3,16 @@ import {ResumeResponse} from "src/middleware/injectHelpers";
 import request from "supertest";
 import {ResumeServer} from "src/ResumeServer";
 import {httpStatusCode} from "src/constants";
-import {CreateUserViewModel, UserViewModel} from "src/user/userViewModels";
 import {UserController} from "src/user/UserController";
 import {IUserApp} from "src/user/UserApp";
+import {CreateUserViewModel, UserViewModel} from "src/user/userViewModels";
+import {fakeUser} from "src/tests/user/userTestsConstants";
 
-const fakeRequestUser: CreateUserViewModel = {
-    ipAddress: "192.404.303.022",
+export const fakeRequestUser: CreateUserViewModel = {
+    ipAddress: fakeUser.ipAddress
 };
 
-const fakeReturnUser: UserViewModel = {
+export const fakeReturnUser: UserViewModel = {
     id: "abacate",
 };
 

@@ -9,19 +9,20 @@ export interface IBlogApp {
     deleteReaction: (idUser: string, idArticle: string) => Promise<void>;
 }
 
-export class BlogApp implements IBlogApp{
-    
-    constructor(private repo: IReactionRepo){};
-    
+export class BlogApp implements IBlogApp {
+
+    constructor(private repo: IReactionRepo) {
+    };
+
     createReaction = async (reaction: Reaction) => {
         await this.repo.create(reaction);
     };
-    
+
     listReactionsByUser = (id: string) =>
         this.repo.find({idUser: id, active})
             .then(lst => lst.map(({type, idArticle, idUser}) => ({type, idArticle, idUser} as Reaction)));
-    
-    deleteReaction = (idUser: string, idArticle: string) => {
-        throw new Error("not implemented");
-    };
+
+    deleteReaction = (idUser: string, idArticle: string) =>
+        this.repo.findOneAndUpdate({idUser, idArticle}, {active: false}).then(() => {});
+
 }

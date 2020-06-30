@@ -2,25 +2,13 @@ import {AxiosError, AxiosResponse, AxiosStatic} from "axios";
 import {IUserRepo, UserModel} from "src/user/UserRepo";
 import {UserApp} from "src/user/UserApp";
 import {User, Geolocation} from "src/user/types";
+import {fakeGeolocation, fakeUser} from "src/tests/user/userTestsConstants";
 
-const fakeGeolocation = {
-    continent_code: "SA",
-    continent_name: "South America",
-    country_code: "BR",
-    country_name: "Brazil",
-    region_code: "DF",
-    region_name: "Federal District",
-    city: "Bras\u00edlia",
-    zip: "71010-001",
-    latitude: -15.819999694824219,
-    longitude: -47.98400115966797,
-};
-
-const fakeKey = "this is a fake key"; 
+const fakeKey = "this is a fake key";
+const fakeId = "this is a fakeId Number" ;
+const fakeIp = fakeUser.ipAddress;
 
 describe('Insert User', () => {
-    const fakeId = "this is a fakeId Number" ;
-    const fakeIp = "fake ip";
 
     test('Happy path', async () => {
 

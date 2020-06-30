@@ -52,14 +52,19 @@ describe('Blog app', () => {
     });
     
     test('delete reaction', async () => {
+        // given
+        const {idUser, idArticle} = fakeReaction; 
+        
         const findOneAndUpdate = jest.fn()
             .mockImplementationOnce(successPromise);
         
         const target = getTarget({findOneAndUpdate});
         
-        const action = () => target.deleteReaction(fakeReaction.idUser, fakeReaction.idArticle);
+        // when
+        const action = () => target.deleteReaction(idUser, idArticle);
         
+        // then
         await expect(action()).resolves;
-        expect(findOneAndUpdate).toBeCalledWith(fakeReaction, {active: false});
-    })
+        expect(findOneAndUpdate).toBeCalledWith({idUser, idArticle}, {active: false});
+    });
 });

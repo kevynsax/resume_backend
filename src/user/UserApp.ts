@@ -1,6 +1,6 @@
-import {IUserRepo} from "src/model/user/UserRepo";
-import {Geolocation, User} from "src/model/user/types";
 import {AxiosStatic} from "axios";
+import {IUserRepo} from "src/user/UserRepo";
+import {User} from "src/user/types";
 
 
 export interface IUserApp {
