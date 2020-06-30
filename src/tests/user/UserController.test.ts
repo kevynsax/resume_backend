@@ -1,11 +1,11 @@
 import {Request} from "express";
-import {IUserApp} from "src/model/user/UserApp";
-import {UserController} from "src/controllers/UserController";
-import {CreateUserViewModel, UserViewModel} from "src/viewModel/userViewModels";
 import {ResumeResponse} from "src/middleware/injectHelpers";
 import request from "supertest";
 import {ResumeServer} from "src/ResumeServer";
 import {httpStatusCode} from "src/constants";
+import {CreateUserViewModel, UserViewModel} from "src/user/userViewModels";
+import {UserController} from "src/user/UserController";
+import {IUserApp} from "src/user/UserApp";
 
 const fakeRequestUser: CreateUserViewModel = {
     ipAddress: "192.404.303.022",

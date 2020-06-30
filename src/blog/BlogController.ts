@@ -1,12 +1,12 @@
-import {IBlogApp} from "src/model/blog/BlogApp";
-import {Reaction} from "src/model/blog/types";
 import {ClassMiddleware, Controller, Delete, Get, Post} from "@overnightjs/core";
 import {Endpoint, injectHelpers} from "src/middleware/injectHelpers";
-import {DeleteReactionViewModel} from "src/viewModel/blogViewModels";
 import {httpStatusCode} from "src/constants";
+import {IBlogApp} from "src/blog/BlogApp";
+import {Reaction} from "src/blog/types";
+import {DeleteReactionViewModel} from "src/blog/blogViewModels";
 
 export const blogRoute = "api/blog";
-export const reactionRoute = `reaction`;
+export const reactionRoute = "reaction";
 
 @Controller(blogRoute)
 @ClassMiddleware(injectHelpers)
@@ -33,7 +33,7 @@ export class BlogController {
     @Delete(reactionRoute)
     public removeReaction: Endpoint = (req, {unwrap}) => {
         const {idArticle, idUser} = req.body as DeleteReactionViewModel;
-        
+
         const result = this.app.deleteReaction(idUser, idArticle);
         return unwrap(result, httpStatusCode.success);
     };

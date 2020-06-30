@@ -1,7 +1,7 @@
 import {MongoMemoryServer} from 'mongodb-memory-server-global';
-import {connect, disconnect, mongo, connection} from "mongoose";
-import {Reaction, ReactionTypeEnum} from "src/model/blog/types";
-import {ReactionRepo} from 'src/model/blog/ReactionRepo';
+import {connect} from "mongoose";
+import { Reaction, ReactionTypeEnum} from "src/blog/types";
+import {ReactionRepo} from "src/blog/ReactionRepo";
 
 
 describe('Reaction Repo tests', () => {
@@ -35,5 +35,6 @@ describe('Reaction Repo tests', () => {
         expect(savedReaction.type).toBe(fakeReaction.type);
         expect(savedReaction.idArticle).toBe(fakeReaction.idArticle);
         expect(savedReaction.idUser).toBe(fakeReaction.idUser);
+        expect(savedReaction.active).toBe(true);
     })
 });

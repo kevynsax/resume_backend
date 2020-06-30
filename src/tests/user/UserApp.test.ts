@@ -1,7 +1,7 @@
-import {IUserRepo, UserModel} from "src/model/user/UserRepo";
-import {UserApp} from "src/model/user/UserApp";
 import {AxiosError, AxiosResponse, AxiosStatic} from "axios";
-import {Geolocation, User} from "src/model/user/types";
+import {IUserRepo, UserModel} from "src/user/UserRepo";
+import {UserApp} from "src/user/UserApp";
+import {User, Geolocation} from "src/user/types";
 
 const fakeGeolocation = {
     continent_code: "SA",

@@ -1,5 +1,5 @@
-import {User} from "src/model/user/types";
 import {Model, Document} from "mongoose";
+import {User} from "src/user/types";
 
 export type UserModel = User & Document;
 

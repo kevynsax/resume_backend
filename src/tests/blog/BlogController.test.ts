@@ -1,14 +1,15 @@
 import {Request} from "express";
-import {BlogController, blogRoute} from "src/controllers/BlogController";
-import {IBlogApp} from "src/model/blog/BlogApp";
-import {Reaction, ReactionTypeEnum} from "src/model/blog/types";
 import {httpStatusCode} from "src/constants";
 import request from 'supertest';
 import {ResumeServer} from "src/ResumeServer";
 import {ResumeResponse} from "src/middleware/injectHelpers";
 import Mock = jest.Mock;
 import {successPromise} from "src/tests/utilsTest";
-import {DeleteReactionViewModel} from "src/viewModel/blogViewModels";
+import {Reaction, ReactionTypeEnum} from "src/blog/types";
+import {DeleteReactionViewModel} from "src/blog/blogViewModels";
+import {BlogController, blogRoute} from "src/blog/BlogController";
+import {IBlogApp} from "src/blog/BlogApp";
+
 
 const fakeIdUser = "fake id user";
 const fakeIdArticle = "fake id article";
