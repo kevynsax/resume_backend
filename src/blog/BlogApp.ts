@@ -23,6 +23,6 @@ export class BlogApp implements IBlogApp {
             .then(lst => lst.map(({type, idArticle, idUser}) => ({type, idArticle, idUser} as Reaction)));
 
     deleteReaction = (idUser: string, idArticle: string) =>
-        this.repo.findOneAndUpdate({idUser, idArticle}, {active: false}).then(() => {});
+        this.repo.findOneAndUpdate({idUser, idArticle, active}, {active: false}).then(() => {});
 
 }

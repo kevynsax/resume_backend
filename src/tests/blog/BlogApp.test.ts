@@ -65,6 +65,6 @@ describe('Blog app', () => {
         
         // then
         await expect(action()).resolves;
-        expect(findOneAndUpdate).toBeCalledWith({idUser, idArticle}, {active: false});
+        expect(findOneAndUpdate).toBeCalledWith({idUser, idArticle, active}, {active: false});
     });
 });
