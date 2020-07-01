@@ -5,12 +5,10 @@ import {ResumeServer} from "src/ResumeServer";
 import {httpStatusCode} from "src/constants";
 import {UserController} from "src/user/UserController";
 import {IUserApp} from "src/user/UserApp";
-import {CreateUserViewModel, UserViewModel} from "src/user/userViewModels";
+import {UserViewModel} from "src/user/userViewModels";
 import {fakeUser} from "src/tests/user/userTestsConstants";
 
-export const fakeRequestUser: CreateUserViewModel = {
-    ipAddress: fakeUser.ipAddress
-};
+
 
 export const fakeReturnUser: UserViewModel = {
     id: "abacate",
@@ -39,14 +37,18 @@ describe('User Controller', () => {
 
     test('Insert User', async () => {
         // given
-        const req = {body: fakeRequestUser} as Request;
+        const req = {
+            connection: {
+                remoteAddress: fakeUser.ipAddress
+            }
+        } as Request;
 
         // when
         const result = await target.insertUser(req, fakeResponse);
 
         // then
         expect(result).toEqual(fakeReturnUser);
-        expect(fakeApp.createUser).toBeCalledWith(fakeRequestUser.ipAddress);
+        expect(fakeApp.createUser).toBeCalledWith(fakeUser.ipAddress);
     });
     
     test('Insert User - Test Endpoint', async () => {
@@ -55,7 +57,6 @@ describe('User Controller', () => {
         
         const response = await agent
             .post(`/api/user`)
-            .send(fakeRequestUser)
             .expect(httpStatusCode.success)
             .then(x => x.text);
         
